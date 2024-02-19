@@ -38,6 +38,10 @@ class onlineshop {
 
         //buscar el producto eliminado 
         productDelete:()=> cy.get('#name'),
+
+        //logout button
+
+        logOutBtn: ()=> cy.get('#logout'),
     }
 
 
@@ -93,11 +97,15 @@ class onlineshop {
     }
 
     clickOnDeleteBtn(){
-        this.get.deleteBtn().click()
+        this.get.deleteBtn().click();
     }
 
     clickOnCloseBtn(){
-        this.get.closeModalBtnDelete().click()
+        this.get.closeModalBtnDelete().click();
+    }
+
+    clickOnLogoutBtn(){
+        this.get.logOutBtn().click();
     }
 
 }

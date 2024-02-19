@@ -18,10 +18,12 @@ describe('',()=>{
 
     it('',()=>{
         //logueo y entro a Online shop
-        onlineShop.clickOnLoginBtn(); 
+        onlineShop.clickOnLoginBtn();
+        cy.wait(1000)
         onlineShop.typeUser(user);
         onlineShop.typePassword(pass);
         onlineShop.clickOnSubmitBtn();
+        cy.wait(5000)
 
         onlineShop.get.titleWelcome().should('have.contain',titleWell);
         onlineShop.clickOnOnlineShopBtn()
@@ -36,7 +38,7 @@ describe('',()=>{
         cy.get('#productCard').type(prodCard)
         cy.get('#productID').type(prodID);
         cy.get('button#createProduct').click();
-        cy.wait(2000)
+        cy.wait(4000)
 
         //mensaje de alerta que se agrego la remera 
         onlineShop.get.alertMsg().eq(2).should('include.text',`${prodName} has been added`);
@@ -56,7 +58,9 @@ describe('',()=>{
        //click en deplegable y seleccionamos id 
        onlineShop.selectByID();
        onlineShop.typeId();
-       
 
+
+       //logout
+        onlineShop.clickOnLogoutBtn();
     })
 })
