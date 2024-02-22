@@ -1,7 +1,7 @@
 class onlineshop {
     get={
         //login
-        loginEnter:()=> cy.get('#registertoggle'),
+        loginEnter:()=> cy.get('#registertoggle',{ timeout: 1000}),
         user:()=> cy.get('[for="user"]'),
         password: ()=> cy.get('[name="pass"]'),
         submitButton:()=>cy.get('#submitForm'),
@@ -18,18 +18,18 @@ class onlineshop {
         priceInput:()=> cy.get('#productPrice'),
         cardInput:()=> cy.get('#productCard'),
         inputId:()=> cy.get('#productID'),
-        createProductBtn:()=>cy.get('button#createProduct'),
+        createProductBtn:()=>cy.get('#createProduct',{timeout:4000}),
 
         //popup msg
-        alertMsg:()=> cy.get('[id^="chakra-modal"]'),
+        alertMsg:()=> cy.get('[id^="chakra-modal"]',{timeout:4000}),
         closeModalBtn:() => cy.get('[id="closeModal"]'),
 
         //click en array y selecion de id element
-        elementID:()=> cy.get('[id="search-type"]'),
+        elementID:()=> cy.get('[id="search-type"]',{timeout:4000}),
         searchInput: ()=> cy.get('#search-bar'),
 
         //eliminar productos 
-        deleteWithID:()=> cy.get('[id="delete-1350"]'),
+        deleteWithID: id => cy.get(`[id="delete-${id}"]`),
         deleteBtn:()=> cy.contains('Delete'),
 
         // popup de eliminar producto 
@@ -37,7 +37,7 @@ class onlineshop {
         closeModalBtnDelete:()=>cy.get('[id="closeModal"]'),
 
         //buscar el producto eliminado 
-        productDelete:()=> cy.get('#name'),
+        gridOfProduct:()=> cy.get('[class^="chakra-skeleton"]'),
 
         //logout button
 
@@ -70,30 +70,43 @@ class onlineshop {
     }
 
     clickOnAddProductBtn(){
-        this.get.addProductBtn().click()
+        this.get.addProductBtn().click({force: true})
     }
 
     typeNameProduct(name){
         this.get.nameInput().type(name)
     }
 
-    typePriceProduct(){
-        this.get.priceInput().type(60)
+    typePriceProduct(price){
+        this.get.priceInput().type(price)
     }
+
+    typeProductCard(card){
+        this.get.cardInput().type(card)
+    }
+
+    typeProductID(productID){
+        this.get.inputId().type(productID)
+    }
+    clickOnCreateProductBtn(){
+        this.get.createProductBtn().click()
+    }
+    
+
 
     clickOnCloseBtn(){
         this.get.closeModalBtn().click();
     }
     selectByID(){
-        this.get.elementID().select('id')
+        this.get.elementID().select('id');
     }
 
-    typeId(){
-        this.get.searchInput().type('1350{enter}')
+    typeId(id){
+        this.get.searchInput().clear().type(`${id}{enter}`);
     }
 
-    clickOnDeleteIcon(){
-        this.get.deleteWithID().click();   
+    clickOnDeleteIcon(id){
+        this.get.deleteWithID(id).click();   
     }
 
     clickOnDeleteBtn(){

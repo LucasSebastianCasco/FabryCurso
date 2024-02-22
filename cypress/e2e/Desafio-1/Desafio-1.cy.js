@@ -3,61 +3,59 @@ import { onlineShop } from "../../support/POM/desafio-1-.Page";
 import data from "./FixtureDesafio-1.json"; 
 
 
+
 describe('',()=>{
     beforeEach('',()=>{
         cy.visit('https://pushing-it.vercel.app/')
     })
-    const prodName = data.productName;
-    const prodID = data.productID;
-    const prodPrice= data.ProductPrice;
-    const prodCard = data.productCard;
-    const titleWell = data.titleWellcom;
-    const titleProduct= data.titleProducts;
-    const user =  data.loginUser;
-    const pass = data.loginPass;
+
 
     it('',()=>{
+        cy.log(data)
         //logueo y entro a Online shop
         onlineShop.clickOnLoginBtn();
-        cy.wait(1000)
-        onlineShop.typeUser(user);
-        onlineShop.typePassword(pass);
+        onlineShop.typeUser(data.loginUser);
+        onlineShop.typePassword(data.loginPass);
         onlineShop.clickOnSubmitBtn();
-        cy.wait(5000)
+        
 
-        onlineShop.get.titleWelcome().should('have.contain',titleWell);
+        onlineShop.get.titleWelcome().should('have.contain',data.titleWellcom);
         onlineShop.clickOnOnlineShopBtn()
-        onlineShop.get.titleProduct().should('have.contain',titleProduct)
+        onlineShop.get.titleProduct().should('have.contain',data.titleProducts)
 
         //agrego una prenda:
         onlineShop.clickOnAddProductBtn();
         onlineShop.get.formCreateProduct().should('be.exist');
         //complete form 
-        onlineShop.typeNameProduct(prodName);
-        cy.get('#productPrice').type(prodPrice);
-        cy.get('#productCard').type(prodCard)
-        cy.get('#productID').type(prodID);
-        cy.get('button#createProduct').click();
-        cy.wait(4000)
+        onlineShop.typeNameProduct(data.productName);
+        onlineShop.typePriceProduct(data.ProductPrice)
+        onlineShop.typeProductCard(data.productCard)
+        onlineShop.typeProductID(data.productID)
+        onlineShop.clickOnCreateProductBtn();
+        
 
         //mensaje de alerta que se agrego la remera 
-        onlineShop.get.alertMsg().eq(2).should('include.text',`${prodName} has been added`);
+        onlineShop.get.alertMsg().eq(2).should('include.text',`${data.productName} has been added`);
         onlineShop.clickOnCloseBtn();
-        cy.wait(4000)
+        
         //click en deplegable y seleccionamos id 
         onlineShop.selectByID();
-        onlineShop.typeId();
+        onlineShop.get.searchInput().clear()
+        onlineShop.typeId(data.productID);
 
         //Elimino producto
-        onlineShop.clickOnDeleteIcon();
+        onlineShop.clickOnDeleteIcon(data.productID);
         onlineShop.clickOnDeleteBtn();
-        onlineShop.get.deleteMsg().should('include.text',`${prodName} has been deleted`);
+        onlineShop.get.deleteMsg().should('include.text',`${data.productName} has been deleted`);
         onlineShop.clickOnCloseBtn();
 
 
        //click en deplegable y seleccionamos id 
        onlineShop.selectByID();
-       onlineShop.typeId();
+       onlineShop.typeId(data.productID);
+
+       //verifico que no exista el producto
+       onlineShop.get.gridOfProduct().should('not.have.text')
 
 
        //logout
