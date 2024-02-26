@@ -1,0 +1,14 @@
+{
+    "product":{
+        "name": "Shein",
+        "precio": 50,
+        "id": 1355,
+        "img": "https://ar.images.search.yahoo.com/images/view;_ylt=AwrEtLJe69hlnNI.BCGt9Qt.;_ylu=c2VjA3NyBHNsawNpbWcEb2lkAzljMDU1NjJhNTQ1NDU1Mzg5ZWQ1ZGUyYTdmMjcyMGRiBGdwb3MDNDUEaXQDYmluZw--?back=https%3A%2F%2Far.images.search.yahoo.com%2Fsearch%2Fimages%3Fp%3Dimagen%2Bde%2Bshein%2Bpantalones%26ei%3DUTF-8%26type%3DE210AR91215G0%26fr%3Dmcafee%26fr2%3Dp%253As%252Cv%253Ai%252Cm%253Asb-top%26tab%3Dorganic%26ri%3D45&w=598&h=1500&imgurl=images-na.ssl-images-amazon.com%2Fimages%2FI%2F814Bd81YXhL._AC_SL1500_.jpg&rurl=https%3A%2F%2Fwww.amazon.com.mx%2FSheIn-Pantalones-mezclilla-cintura-pantalones%2Fdp%2FB094C2HT5H&size=187.6KB&p=imagen+de+shein+pantalones&oid=9c05562a545455389ed5de2a7f2720db&fr2=p%3As%2Cv%3Ai%2Cm%3Asb-top&fr=mcafee&tt=SheIn+Pantalones+de+mezclilla+de+cintura+alta+para+mujer%2C+pantalones+de+...&b=0&ni=90&no=45&ts=&tab=organic&sigr=jHWP_Zn4Y44k&sigb=Ic21K0imfw7H&sigi=t0U3DuHRp3RN&sigt=tAkiNooVoHpP&.crumb=7zL7ywznW1H&fr=mcafee&fr2=p%3As%2Cv%3Ai%2Cm%3Asb-top&type=E210AR91215G0"
+    },
+
+    "newProduct":{
+        "name": "Remera Blanca",
+        "precio": 40,
+        "img": "https://tse2.mm.bing.net/th?id=OIP.zfY7-qT4I1Z6NzxBH1T4iQHaJQ&pid=Api&P=0&h=180"
+    }
+}
