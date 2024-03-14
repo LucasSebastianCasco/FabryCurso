@@ -9,11 +9,6 @@ describe('Products are added to the cart and paid',()=>{
         cy.visit(Cypress.env().homeUrl)
     })
     it('E2E test with SQL Postgree',()=>{
-        const query = `select * from "purchaseProducts" pp 
-        inner join sells s on pp.sell_id = s.id 
-        where s."firstName" = 'Lucas' and s."lastName" = 'Casco'
-        ORDER BY s.id  DESC LIMIT 2`
-
         cy.eliminarProducto(data.product[0].id);
         cy.eliminarProducto(data.product[1].id)
         cy.crearProducto(data.product[0]);
@@ -50,25 +45,30 @@ describe('Products are added to the cart and paid',()=>{
         page.typeCardNumber(data.cardNumer);
         page.clickOnPurchaseBtn()
         page.get.purcheSuccessfully().should('have.contain',`${data.firstname} ${data.lastname} has succesfully purchased the following items:`)
+        
+        page.get.sellID().invoke('text').as('sellId');
+        cy.get('@sellId').then((sellId) => {
+            const query = `select * from "purchaseProducts" pp 
+                           inner join sells s on pp.sell_id = s.id 
+                           where s.id=${sellId}`;
 
+            cy.task("connectDB", query).then(result=>{
 
-        cy.task("connectDB", query).then(result=>{
-          
-            expect(result[0].lastName).to.be.equal(data.lastname)
-            expect(result[0].firstName).to.be.equal(data.firstname)
-            expect(result[0].price).to.be.equal("50.00")
-            expect(result[0].product).to.be.equal(data.product[0].name)
-            expect(result[0].quantity).to.be.equal(2)
-            expect(result[0].total_price).to.be.equal("100.00")
+                expect(result[0].lastName).to.be.equal(data.lastname)
+                expect(result[0].firstName).to.be.equal(data.firstname)
+                expect(result[0].price).to.be.equal("50.00")
+                expect(result[0].product).to.be.equal(data.product[0].name)
+                expect(result[0].quantity).to.be.equal(2)
+                expect(result[0].total_price).to.be.equal("100.00")
 
-            expect(result[1].lastName).to.be.equal(data.lastname)
-            expect(result[1].firstName).to.be.equal(data.firstname)
-            expect(result[1].price).to.be.equal("40.00")
-            expect(result[1].product).to.be.equal(data.product[1].name)
-            expect(result[1].quantity).to.be.equal(2)
-            expect(result[1].total_price).to.be.equal("80.00")
-            
-        })
+                expect(result[1].lastName).to.be.equal(data.lastname)
+                expect(result[1].firstName).to.be.equal(data.firstname)
+                expect(result[1].price).to.be.equal("40.00")
+                expect(result[1].product).to.be.equal(data.product[1].name)
+                expect(result[1].quantity).to.be.equal(2)
+                expect(result[1].total_price).to.be.equal("80.00")            
+            })
+        }) 
     })
 
 

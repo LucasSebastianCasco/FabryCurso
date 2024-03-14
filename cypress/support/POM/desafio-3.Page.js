@@ -16,7 +16,9 @@ class Page{
         cardNumber:()=> cy.get('[data-cy="cardNumber"]'),
         purchaseBtn:()=> cy.get('[data-cy="purchase"]'),
         purcheSuccessfully:()=> cy.get('[id^="chakra-modal"]',{timeout:4000}).eq(5),
-        thakYouBtn: () =>cy.get('[data-cy="thankYou"]')
+        thakYouBtn: () =>cy.get('[data-cy="thankYou"]'),
+
+        sellID:()=> cy.get('[data-cy="sellId"]')
     }
     
     clickOnOnlineShopBtn(){
