@@ -27,6 +27,7 @@
 import '../support/Request/product'
 
 Cypress.Commands.add('login',(usuario, password)=>{
+    cy.session('loginSession',()=>{
         cy.request({
             method: "POST",
             url:`${Cypress.env().baseUrlAPI}/login`,
@@ -40,4 +41,5 @@ Cypress.Commands.add('login',(usuario, password)=>{
             window.localStorage.setItem('user_id',respuesta.body.user._id);
             Cypress.env().token= respuesta.body.token;
         })
+    })
 })
