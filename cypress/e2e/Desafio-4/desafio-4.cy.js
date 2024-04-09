@@ -19,23 +19,25 @@ describe('Desafio 4',()=>{
             page.get.titleProduct().should('have.contain', 'Products');
             page.selectByID();
 
-            let countOneProd = 0
-            while (countOneProd < 2) {
-                page.typeId(data.product[0].id)
-                page.clickOnCardProduct(data.product[0].id);
-                page.get.msgAlert().should('have.contain',`${data.product[0].name} has been added to the shopping cart`);
-                page.clickOnBtnClose();
-                countOneProd++;
-            }
 
-            let countTwoProd=0
-            while (countTwoProd<2){
+            function addProductOne() {
+                page.typeId(data.product[0].id);
+                page.clickOnCardProduct(data.product[0].id);
+                page.get.msgAlert().should('have.contain', `${data.product[0].name} has been added to the shopping cart`);
+                page.clickOnBtnClose();
+            }  
+            addProductOne();
+            addProductOne();
+
+            function addProductTwo(){
                 page.typeId(data.product[1].id)
                 page.clickOnCardProduct(data.product[1].id);
                 page.get.msgAlert().should('have.contain',`${data.product[1].name} has been added to the shopping cart`);
                 page.clickOnBtnClose();
-                countTwoProd++
             }
+            
+            addProductTwo();
+            addProductTwo();
 
             page.clickOnBtnshoppingCard();
             page.clickOnShowTotalPricer();
@@ -44,24 +46,24 @@ describe('Desafio 4',()=>{
             page.get.quantityproduct().eq(0).should('have.contain',2);
             page.get.productName().eq(0).should('have.contain', data.product[0].name)
             page.get.priceProduct().eq(0).invoke('text').then(unitpricerOne=>{
-                let pricerOne= parseInt(unitpricerOne.replace('$',''));
-                expect(pricerOne).to.be.equal(data.product[0].price);
+                const pricerWith$ = `$${data.product[0].price}`
+                expect(unitpricerOne).to.be.equal(pricerWith$);
             })
             page.get.totalPriceProduct().eq(0).invoke('text').then(totalPricerOne=>{
-                let priceTotalOne =  parseInt(totalPricerOne.replace('$',''));
-                expect(priceTotalOne).to.be.equal(data.product[0].price * 2);
+                const pricerWith$ = `$${data.product[0].price*2}`
+                expect(totalPricerOne).to.be.equal(pricerWith$)
             })
 
             //segundo producto
             page.get.quantityproduct().eq(1).should('have.contain',2);
             page.get.productName().eq(1).should('have.contain', data.product[1].name)
             page.get.priceProduct().eq(1).invoke('text').then(unitpricerTwo=>{
-                let pricerTwo= parseInt(unitpricerTwo.replace('$',''));
-                expect(pricerTwo).to.be.equal(data.product[1].price);
+                const pricerWith$ = `$${data.product[1].price}`
+                expect(unitpricerTwo).to.be.equal(pricerWith$);
             })
             page.get.totalPriceProduct().eq(1).invoke('text').then(totalPricerTwo=>{
-                let priceTotalTwo =  parseInt(totalPricerTwo.replace('$',''));
-                expect(priceTotalTwo).to.be.equal(data.product[1].price * 2);
+                const pricerWith$ = `$${data.product[1].price*2}`
+                expect(totalPricerTwo).to.be.equal(pricerWith$);
             })
             //pricio total sumando los 2 productos 
             page.get.totalSumProducts().invoke('text').then(price=>{
@@ -72,13 +74,15 @@ describe('Desafio 4',()=>{
             page.clickOnbillingBtn()
 
             page.get.subTotal().invoke('text').then(subtotal=>{
-                let subtotalAmount =  parseInt(subtotal.replace('$',''))
-                expect(subtotalAmount).to.be.equal((data.product[0].price*2) + (data.product[1].price*2))
+                const pricerSum = data.product[0].price*2 + data.product[1].price*2
+                const pricerWith$ = `$${pricerSum}`
+                expect(subtotal).to.be.equal(pricerWith$)
             })
 
             page.get.totalPrice().invoke('text').then(totalPrice=>{
-                let priceTotal =  parseInt(totalPrice.replace('$',''))
-                expect(priceTotal).to.be.equal((data.product[0].price*2) + (data.product[1].price*2))
+                const pricerSum = data.product[0].price*2 + data.product[1].price*2
+                const pricerWith$ = `$${pricerSum}`
+                expect(totalPrice).to.be.equal(pricerWith$)
             })
 
             page.goToCheckOut();
@@ -99,14 +103,14 @@ describe('Desafio 4',()=>{
     
                     expect(result[0].lastName).to.be.equal(data.lastname)
                     expect(result[0].firstName).to.be.equal(data.firstname)
-                    expect(parseInt(result[0].price)).to.be.equal(data.product[0].price)
+                    expect(parseInt(result[0].price)).to.be.equal(parseInt(data.product[0].price))
                     expect(result[0].product).to.be.equal(data.product[0].name)
                     expect(result[0].quantity).to.be.equal(2)
                     expect(parseInt(result[0].total_price)).to.be.equal(data.product[0].price * 2)
     
                     expect(result[1].lastName).to.be.equal(data.lastname)
                     expect(result[1].firstName).to.be.equal(data.firstname)
-                    expect(parseInt(result[1].price)).to.be.equal(data.product[1].price)
+                    expect(parseInt(result[1].price)).to.be.equal(parseInt(data.product[1].price))
                     expect(result[1].product).to.be.equal(data.product[1].name)
                     expect(result[1].quantity).to.be.equal(2)
                     expect(parseInt(result[1].total_price)).to.be.equal(data.product[1].price *2)            
